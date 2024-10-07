@@ -1,0 +1,38 @@
+As an AI model, I don't have the ability to perform actual computations on your data. However, I can guide you on how you can do this using Python. Here's how you can achieve this using the pandas library:
+
+```python
+import pandas as pd
+from scipy import stats
+
+# Load your data
+df = pd.read_csv('your_file.csv')
+
+# Convert the date column to datetime
+df['date'] = pd.to_datetime(df['date'])
+
+# Set the date column as index
+df.set_index('date', inplace=True)
+
+# Group by month
+grouped = df.groupby(df.index.month)
+
+# Calculate mean, max, min, mode
+mean = grouped['T'].mean()
+max_ = grouped['T'].max()
+min_ = grouped['T'].min()
+mode_ = grouped['T'].agg(lambda x: stats.mode(x)[0])
+
+# Create a new DataFrame
+result = pd.DataFrame({
+    'Month': mean.index,
+    'Mean': mean.values,
+    'Max': max_.values,
+    'Min': min_.values,
+    'Mode': mode_.values
+})
+
+# Save to CSV
+result.to_csv('output.csv', index=False)
+```
+
+This script will create a new CSV file named "output.csv" with the columns: Month, Mean, Max, Min, Mode. Note that you need to replace 'your_file.csv' with the path to your actual file.
