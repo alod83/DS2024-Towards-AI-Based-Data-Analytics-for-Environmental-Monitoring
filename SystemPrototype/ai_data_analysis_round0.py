@@ -17,42 +17,31 @@ import os
 loader = DirectoryLoader('output/')
 data = loader.load()
 
-#loader = PyPDFDirectoryLoader('output/')
-#data = loader.load()
-
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size = 1000,
-    chunk_overlap = 20,
-    length_function = len,
-    is_separator_regex= False
+    chunk_size=1000,
+    chunk_overlap=20,
+    length_function=len,
+    is_separator_regex=False
 )
-
 splitted_data = text_splitter.split_documents(data)
 
+# Load secrets
 with open('secrets.json') as f:
     secrets = json.load(f)
-
 secrets = secrets['gpt-4']
-#embeddings = AzureOpenAIEmbeddings(
-#    azure_endpoint = secrets['endpoint'],
-#    api_key        = secrets['api_key'],
-#    api_version    = "2023-05-15",
-#    model='gpt-4',
-    #deployment_name='text-embedding-ada-002',
-    #azure_deployment=secrets['deployment_name']
-#)
 
-embeddings = OpenAIEmbeddings()
-embedding_function = OpenAIEmbeddingFunction(
-    api_key =os.environ.get('OPENAI_API_KEY'),
-    model_name = 'text-embedding-ada-002'
+# Use OpenAI Embeddings
+embeddings = OpenAIEmbeddings(
+    api_key=os.environ.get('OPENAI_API_KEY'),
+    model='text-embedding-ada-002'
 )
 
+# Create and store documents in ChromaDB
 store = Chroma.from_documents(
     splitted_data,
     embeddings,
-    ids = [f"{item.metadata['source']}-{index}" for index, item in enumerate(splitted_data)],
-    persist_directory = 'db' 
+    ids=[f"{item.metadata.get('source', 'unknown-source')}-{index}" for index, item in enumerate(splitted_data)],
+    persist_directory='db'
 )
 
 store.persist()
@@ -87,8 +76,8 @@ llm_chain = RetrievalQA.from_chain_type(
 )
 
 #question = "In which month and year was the highest temperature value recorded?"
-#question = "What was the hottest month for each year?"
-question = "What is the percentage increase in temperature over the decade 2013-2023?"
+question = "What was the hottest month for each year?"
+#question = "What is the percentage increase in temperature over the decade 2013-2023?"
 
 print(llm_chain(question))
 
