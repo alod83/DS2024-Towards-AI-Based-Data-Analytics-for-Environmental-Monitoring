@@ -6,6 +6,33 @@ Environmental monitoring is essential to intervene promptly in environmental dis
 
 This poster paper was presented at the [Discovery Science 2024 Conference](http://ds2024.isti.cnr.it/).
 
+## The poster
+![alt text](Poster/Poster.png "Poster Lo Duca")
+
+The poster contains a three-level interactive wheel you can spin to show different scenarios. The goal of this wheel is to engage the observer actively.
+
+![alt text](Poster/AIWheel.png "Poster Lo Duca")
+
+You can build the wheel, too.
+
+### Required:
+
+* a sample holder
+* adhesive tape
+* a bottle cap
+* two paper clips
+
+### Procedure:
+1. Cut out the white parts in the main wheel and in the various layers
+2. Drill two holes in the bottle cap and insert the two tabs of the sample holder into the two holes. Secure with tape. 
+3. Drill a hole in the main poster and subsequent layers. 
+4. Secure the sample holder to the last level of the wheel with tape.
+5. Use the paper clips as indicated on the poster to move from one level to another.
+
+Download the [poster](Poster/PosterLoDuca.pdf).
+
+Have fun!
+
 
 
 
